@@ -7,10 +7,10 @@ import AHeader from '../../components/admin/AHeader'
 import SideMenu from '../../components/admin/SideMenu'
 
 
-const ALayout = () => {
+const ALayout = ({accountService}) => {
     return (
         <div className='ALayout'>
-            <AHeader/>
+            <AHeader accountService={accountService}/>
             <div id="admin">
                 <SideMenu/>
                 <div id="admin_body"><Outlet/></div>

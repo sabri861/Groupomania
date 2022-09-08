@@ -8,18 +8,18 @@ import AuthGard from './_helpers/AuthGard';
 
 
 
-function App() {
+function App({accountService}) {
   return (
     <div className="App">
        <BrowserRouter>
        <Routes>
         <Route path='/*' element={<PublicRouter/>} />
         <Route path='/admin/*' element={
-          <AuthGard>
-        <AdminRouter/>
+          <AuthGard accountService={accountService}>
+        <AdminRouter accountService={accountService}/>
         </AuthGard>
         }/>
-        <Route path='/auth/*' element={<AuthRouter/>} />
+        <Route path='/auth/*' element={<AuthRouter accountService={accountService}/>} />
        </Routes>
        </BrowserRouter>
     </div>

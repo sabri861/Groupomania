@@ -1,11 +1,8 @@
 import { Navigate } from "react-router-dom";
 
-
-const AuthGard = ({children}) => {
-    let logged = false
-
-    if(!logged){
-    return  <Navigate to="/auth/login"/>
+const AuthGard = ({children, accountService}) => {
+    if(!accountService.isLogged()){
+        return  <Navigate to="/auth"/>
     }
     return children
 };

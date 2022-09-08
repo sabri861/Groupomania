@@ -1,14 +1,13 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Login from './Login';
-
 import Error from '../../_utils/error';
+import Auth from './Auth';
 
-const AuthRouter = () => {
+const AuthRouter = ({accountService}) => {
     return (
         <Routes>
-            <Route index element={<Login/>}/>
-            <Route path='login' element={<Login/>}/>
+            <Route index element={<Auth accountService={accountService}/>}/>
+            <Route path='auth' element={<Auth accountService={accountService}/>}/>
             <Route path="*" element={<Error/>}/>
         </Routes>
     );

@@ -6,10 +6,10 @@ import { Cocktail, CEdit } from '../../pages/Admin/Cocktail';
 
 import Error from '../../_utils/error';
 
-const AdminRouter = () => {
+const AdminRouter = ({accountService}) => {
 return (
      <Routes>
-        <Route element={<ALayout/>}>
+        <Route element={<ALayout accountService={accountService}/>}>
         <Route index element={<Dashboard/>}/>
             <Route path='/Dashboard' element={<Dashboard/>} />
             <Route path='user'>

@@ -1,11 +1,7 @@
+import axios from 'axios'
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './auth.css';
 
-const Login = ({accountService}) => {
-    
-    let navigate = useNavigate()
-
+const Signup = () => {
     const [credentials, setCredentials] = useState({
         email: '',
         password: '',
@@ -21,29 +17,30 @@ const Login = ({accountService}) => {
       })
     }
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault()
         console.log(credentials)
-        await accountService.login(credentials);
-        navigate('/admin')
+        axios.post("http://localhost:4200/api/auth/signup", credentials)
+        .then((res)=>{
+            console.log(res)
+        })
     }
-
     return (
-        <form onSubmit={onSubmit} style={{backgroundColor:'blue'}}>
+        <form onSubmit={onSubmit}style={{backgroundColor:'yellow'}}>
             <div className='group'>
-            <label htmlFor='email'>email</label>
+            <label htmlFor='email'>Email</label>
             <input type="text" name="email" id="email" value={credentials.email} onChange={onChange}/>
             </div>
             <div className='group'>
                  <label htmlFor='password'>Mot de passe</label>
-                 <input type="password" name="password" value={credentials.password} onChange={onChange}/>
+                 <input type="text" name="password" value={credentials.password} onChange={onChange}/>
             </div>
             <div className='group'>
-                  <button>Connexion</button>
+                  <button>S'inscrire</button>
             </div>
             
         </form>
     );
 };
 
-export default Login;
+export default Signup;

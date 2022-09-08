@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { AccountService } from './_services/account.service';
 
+const accountService = new AccountService(localStorage);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <App accountService={accountService}/>
   </React.StrictMode>
 );
 
