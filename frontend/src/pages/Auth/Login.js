@@ -1,49 +1,75 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './auth.css';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import './auth.css'
+import { Button, Stack, TextField, Paper } from '@mui/material'
 
-const Login = ({accountService}) => {
-    
-    let navigate = useNavigate()
+const styles = {
+  textField: {
+    // backgroundColor: 'white',
+    color: 'white',
+    // background: 'red',
+  },
+}
 
-    const [credentials, setCredentials] = useState({
-        email: '',
-        password: '',
-    })
+const Login = ({ accountService }) => {
+  let navigate = useNavigate()
 
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: '',
+  })
 
-    const onChange = (e) => {
-       console.log(e.target.name)
-       console.log(e.target.value)
-       setCredentials({
-        ...credentials,
-        [e.target.name]: e.target.value
-      })
+  const [loginError, setLoginError] = useState('')
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    console.log(credentials)
+    const login = await accountService.login(credentials)
+    if (login.response.data.error) {
+      setLoginError(login.response.data.error)
+      return
     }
+    navigate('/admin')
+  }
 
-    const onSubmit = async (e) => {
-        e.preventDefault()
-        console.log(credentials)
-        await accountService.login(credentials);
-        navigate('/admin')
-    }
+  return (
+    <Stack direction="column" spacing={2}>
+      <TextField
+        sx={{
+          input: { ...styles.textField },
+        }}
+        id="outlined-basic"
+        label="Email"
+        variant="filled"
+        onChange={(event) => {
+          setCredentials({
+            ...credentials,
+            email: event.target.value,
+          })
+        }}
+      />
 
-    return (
-        <form onSubmit={onSubmit} style={{backgroundColor:'blue'}}>
-            <div className='group'>
-            <label htmlFor='email'>email</label>
-            <input type="text" name="email" id="email" value={credentials.email} onChange={onChange}/>
-            </div>
-            <div className='group'>
-                 <label htmlFor='password'>Mot de passe</label>
-                 <input type="password" name="password" value={credentials.password} onChange={onChange}/>
-            </div>
-            <div className='group'>
-                  <button>Connexion</button>
-            </div>
-            
-        </form>
-    );
-};
+      <TextField
+        sx={{ input: { ...styles.textField } }}
+        id="outlined-password-input"
+        label="Password"
+        type="password"
+        variant="filled"
+        autoComplete="current-password"
+        onChange={(event) => {
+          setCredentials({
+            ...credentials,
+            password: event.target.value,
+          })
+        }}
+      />
 
-export default Login;
+      <Button variant="contained" onClick={onSubmit}>
+        Connexion
+      </Button>
+      <p>{loginError}</p>
+    </Stack>
+  )
+}
+
+export default Login

@@ -2,11 +2,11 @@
     display: flex;
 }
 
-.AHeader{
+/* .AHeader{
     text-align: center;
     line-height: 50px;
     background-color: grey;
-}
+} */
 
 .SideMenu{
     flex-grow: 1;

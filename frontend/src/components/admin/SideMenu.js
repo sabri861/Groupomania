@@ -8,9 +8,8 @@ const SideMenu = () => {
     return (
         <div className='SideMenu'>
          <ul>
-            <li><Link to="/">Acceuil</Link></li>
+            <li><Link to="/admin/dashboard">Acceuil</Link></li>
             <li>&nbsp;</li>
-            <li><Link to="/admin/dashboard">dashboard</Link></li>
             <li>
                 User
                 <ul>
