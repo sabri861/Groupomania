@@ -1,30 +1,27 @@
-import React from 'react';
+import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { ALayout, Dashboard } from '../../pages/Admin'
-import { User, UEdit, Add } from '../../pages/Admin/User';
-import { Cocktail, CEdit } from '../../pages/Admin/Cocktail';
+import { ALayout, Acceuil } from '../../pages/Admin'
+import { User, UEdit, Add } from '../../pages/Admin/User'
+import { Cocktail, CEdit } from '../../pages/Admin/Cocktail'
 
-import Error from '../../_utils/error';
+import Error from '../../_utils/error'
+import { CreatePublication } from './Publication'
+import { Profile } from './Profil'
+import SideMenu from '../../components/admin/SideMenu'
 
-const AdminRouter = ({accountService}) => {
-return (
-     <Routes>
-        <Route element={<ALayout accountService={accountService}/>}>
-        <Route index element={<Dashboard/>}/>
-            <Route path='/Dashboard' element={<Dashboard/>} />
-            <Route path='user'>
-              <Route path='index' element={<User/>} />
-              <Route path='edit/:uid' element={<UEdit/>} />
-              <Route path='add' element={<Add/>} />
-            </Route>
-            <Route path='cocktail'>
-              <Route path='index' element={<Cocktail/>} />
-              <Route path='edit' element={<CEdit/>} />
-            </Route>
-            <Route path="*" element={<Error/>}/>
-             </Route>
-        </Routes>
-    );
-};
+const AdminRouter = ({ accountService }) => {
+  return (
+    <Routes>
+      <Route element={<ALayout accountService={accountService} />}>
+        <Route index element={<Acceuil />} />
+        <Route path="/acceuil" element={<Acceuil />} />
+        <Route path="/createPublication" element={<CreatePublication />} />
+        <Route path="/profile" element={<Profile />} />
 
-export default AdminRouter;
+        <Route path="*" element={<Error />} />
+      </Route>
+    </Routes>
+  )
+}
+
+export default AdminRouter

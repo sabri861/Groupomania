@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './auth.css'
-import { Button, Stack, TextField, Paper } from '@mui/material'
+import { Button, Stack, TextField } from '@mui/material'
 
 const styles = {
   textField: {
@@ -21,11 +21,20 @@ const Login = ({ accountService }) => {
 
   const [loginError, setLoginError] = useState('')
 
+  const [emailError, setEmailError] = useState('')
+
   const onSubmit = async (e) => {
     e.preventDefault()
     console.log(credentials)
+    const regExEmail = (value) => {
+      return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
+    }
+    if (!regExEmail(credentials.email)) {
+      setEmailError('email invalide')
+      return
+    }
     const login = await accountService.login(credentials)
-    if (login.response.data.error) {
+    if (login.response && login.response.data.error) {
       setLoginError(login.response.data.error)
       return
     }
@@ -41,6 +50,7 @@ const Login = ({ accountService }) => {
         id="outlined-basic"
         label="Email"
         variant="filled"
+        helperText={emailError}
         onChange={(event) => {
           setCredentials({
             ...credentials,

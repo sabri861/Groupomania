@@ -6,6 +6,21 @@ export class AccountService {
     this.init()
   }
 
+  async signup({ email, password }) {
+    const credentials = { email, password }
+    try {
+      const res = await axios.post(
+        'http://localhost:4200/api/auth/signup',
+        credentials
+      )
+      console.log(res)
+      return res
+    } catch (error) {
+      console.log(error)
+      return error
+    }
+  }
+
   async login({ email, password }) {
     const credentials = { email, password }
     try {
@@ -17,6 +32,7 @@ export class AccountService {
       this.localStorage.setItem('token', res.data.token)
       //*****PASSER PAR DEFAUT LE TOKEN DANS TOUTE LES REQUETTE DE L'APPLICATION *******/
       axios.defaults.headers.common.Authorization = `Bearer ${window.localStorage.token}`
+      return res
     } catch (error) {
       console.log(error)
       return error

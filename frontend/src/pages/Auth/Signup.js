@@ -10,20 +10,50 @@ const styles = {
   },
 }
 
-const Signup = () => {
+const Signup = ({ accountService }) => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
   })
 
-  const onSubmit = (e) => {
+  const [signupError, setSignupError] = useState('')
+
+  const [emailError, setEmailError] = useState('')
+
+  const [passwordError, setPasswordError] = useState('')
+
+  const onSubmit = async (e) => {
     e.preventDefault()
     console.log(credentials)
-    axios
-      .post('http://localhost:4200/api/auth/signup', credentials)
-      .then((res) => {
-        console.log(res)
-      })
+    const regExEmail = (value) => {
+      return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
+    }
+
+    if (!regExEmail(credentials.email)) {
+      setEmailError('email invalide')
+      return
+    }
+
+    const regExPassword = (value) => {
+      return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
+        value
+      )
+    }
+
+    if (!regExPassword(credentials.passwor)) {
+      setPasswordError(
+        'password invalide: Au moins une lettre majuscule et minuscule, un chiffre, un caractère spécial, Minimum huit de longueur'
+      )
+      return
+    }
+
+    const signup = await accountService.signup(credentials)
+    console.log(signup)
+    if (signup.response && signup.response.data.error) {
+      setSignupError(signup.response.data.error)
+      return
+    }
+    setSignupError(signup.data.message)
   }
 
   return (
@@ -35,6 +65,7 @@ const Signup = () => {
         id="outlined-basic"
         label="Email"
         variant="filled"
+        helperText={emailError}
         onChange={(event) => {
           setCredentials({
             ...credentials,
@@ -49,6 +80,7 @@ const Signup = () => {
         label="Password"
         type="password"
         variant="filled"
+        helperText={passwordError}
         autoComplete="current-password"
         onChange={(event) => {
           setCredentials({
@@ -61,6 +93,7 @@ const Signup = () => {
       <Button variant="contained" onClick={onSubmit}>
         inscription
       </Button>
+      <p>{signupError}</p>
     </Stack>
   )
 }

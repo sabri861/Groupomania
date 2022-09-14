@@ -1,11 +1,7 @@
-import React from 'react';
+import React from 'react'
 
 const Cocktail = () => {
-    return (
-        <div className='Cocktail'>
-            
-        </div>
-    );
-};
+  return <div className="Cocktail">jhgjgjgjg</div>
+}
 
-export default Cocktail;
+export default Cocktail
