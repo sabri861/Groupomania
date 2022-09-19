@@ -35,11 +35,12 @@ export class AccountService {
       return res
     } catch (error) {
       console.log(error)
-      return error
+      throw error
     }
   }
 
   logout() {
+    console.log('here')
     this.localStorage.removeItem('token')
   }
 

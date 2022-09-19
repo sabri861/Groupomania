@@ -23,9 +23,12 @@ const Login = ({ accountService }) => {
 
   const [emailError, setEmailError] = useState('')
 
+  const [passwordError, setPasswordError] = useState('')
+
   const onSubmit = async (e) => {
     e.preventDefault()
     console.log(credentials)
+    setLoginError('')
     const regExEmail = (value) => {
       return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
     }
@@ -33,12 +36,20 @@ const Login = ({ accountService }) => {
       setEmailError('email invalide')
       return
     }
-    const login = await accountService.login(credentials)
-    if (login.response && login.response.data.error) {
-      setLoginError(login.response.data.error)
+    if (credentials.password.length < 6) {
+      setPasswordError('mot de passe : minimum 6 caractères ')
       return
     }
-    navigate('/admin')
+    try {
+      const login = await accountService.login(credentials)
+      if (login.response && login.response.data.error) {
+        setLoginError(login.response.data.error)
+        return
+      }
+      navigate('/admin')
+    } catch {
+      setLoginError('email ou mot de passe incorrect')
+    }
   }
 
   return (
@@ -51,7 +62,11 @@ const Login = ({ accountService }) => {
         label="Email"
         variant="filled"
         helperText={emailError}
+        error={emailError}
         onChange={(event) => {
+          if (emailError) {
+            setEmailError('')
+          }
           setCredentials({
             ...credentials,
             email: event.target.value,
@@ -65,8 +80,13 @@ const Login = ({ accountService }) => {
         label="Password"
         type="password"
         variant="filled"
+        helperText={passwordError}
+        error={passwordError}
         autoComplete="current-password"
         onChange={(event) => {
+          if (passwordError) {
+            setPasswordError('')
+          }
           setCredentials({
             ...credentials,
             password: event.target.value,

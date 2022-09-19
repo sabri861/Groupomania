@@ -1,18 +1,15 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { ALayout, Acceuil } from '../../pages/Admin'
-import { User, UEdit, Add } from '../../pages/Admin/User'
-import { Cocktail, CEdit } from '../../pages/Admin/Cocktail'
-
-import Error from '../../_utils/error'
-import { CreatePublication } from './Publication'
-import { Profile } from './Profil'
-import SideMenu from '../../components/admin/SideMenu'
+import { AppContainer } from '../router'
+import { Acceuil } from '../pages/Admin/dashbord'
+import Error from '../_utils/error'
+import { CreatePublication } from '../pages/Admin/Publication'
+import { Profile } from '../pages/Admin/Profil'
 
 const AdminRouter = ({ accountService }) => {
   return (
     <Routes>
-      <Route element={<ALayout accountService={accountService} />}>
+      <Route element={<AppContainer accountService={accountService} />}>
         <Route index element={<Acceuil />} />
         <Route path="/acceuil" element={<Acceuil />} />
         <Route path="/createPublication" element={<CreatePublication />} />

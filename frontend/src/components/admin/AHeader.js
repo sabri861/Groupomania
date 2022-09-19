@@ -1,4 +1,3 @@
-import { AccountService } from '../../_services/account.service'
 import React from 'react'
 import PropTypes from 'prop-types'
 import AppBar from '@mui/material/AppBar'
@@ -15,9 +14,10 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
+import { ReactComponent as MainLogo } from '../../assets/logoAuth.svg'
 
 const drawerWidth = 240
-const navItems = ['Acceuil', 'Profil', 'Nouvelle Publication', 'Déconnexion']
+const navItems = ['Acceuil', 'Profil', 'new post', 'Déconnexion']
 
 function AHeader(props) {
   const { window } = props
@@ -27,7 +27,7 @@ function AHeader(props) {
     console.log(item)
     if (item == 'Déconnexion') {
       logout()
-    } else if (item == 'Nouvelle Publication') {
+    } else if (item == 'new post') {
       navigate('/admin/createPublication')
     } else if (item == 'Profil') {
       navigate('/admin/profile')
@@ -40,6 +40,7 @@ function AHeader(props) {
   }
 
   const logout = () => {
+    console.log(props.accountService)
     props.accountService.logout()
     navigate('/')
   }
@@ -47,7 +48,7 @@ function AHeader(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        <MainLogo style={{ height: 70, width: 200, marginTop: 13 }} />
       </Typography>
       <Divider />
       <List>
@@ -55,7 +56,10 @@ function AHeader(props) {
           <ListItem key={item} disablePadding>
             <ListItemButton
               onClick={() => onMenuItemClick(item)}
-              sx={{ textAlign: 'center' }}
+              sx={{
+                textAlign: 'center',
+                color: '#87A084',
+              }}
             >
               <ListItemText primary={item} />
             </ListItemButton>
@@ -70,7 +74,7 @@ function AHeader(props) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar component="nav">
+      <AppBar component="nav" style={{ backgroundColor: '#001925' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -86,14 +90,14 @@ function AHeader(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            <MainLogo style={{ height: 70, width: 200, marginTop: 7 }} />
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
               <Button
                 key={item}
                 onClick={() => onMenuItemClick(item)}
-                sx={{ color: '#fff' }}
+                // sx={{ color: '#fff' }}
               >
                 {item}
               </Button>
@@ -115,6 +119,7 @@ function AHeader(props) {
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerWidth,
+              backgroundColor: '#001925',
             },
           }}
         >

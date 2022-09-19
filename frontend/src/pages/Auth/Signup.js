@@ -22,28 +22,51 @@ const Signup = ({ accountService }) => {
 
   const [passwordError, setPasswordError] = useState('')
 
-  const onSubmit = async (e) => {
-    e.preventDefault()
-    console.log(credentials)
-    const regExEmail = (value) => {
-      return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
-    }
+  const regExEmail = (value) => {
+    return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
+  }
+
+  const regExPassword = (value) => {
+    return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
+      value
+    )
+  }
+
+  const validateForm = (credentials) => {
+    let hasError = false
 
     if (!regExEmail(credentials.email)) {
       setEmailError('email invalide')
-      return
+      hasError = true
     }
 
-    const regExPassword = (value) => {
-      return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
-        value
-      )
-    }
-
-    if (!regExPassword(credentials.passwor)) {
+    if (!regExPassword(credentials.password)) {
+      console.log('here')
       setPasswordError(
-        'password invalide: Au moins une lettre majuscule et minuscule, un chiffre, un caractère spécial, Minimum huit de longueur'
+        'password invalide: Au moins une lettre majuscule et minuscule, un chiffre, un caractère spécial,'
       )
+      hasError = true
+    }
+
+    return hasError
+  }
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    console.log(credentials)
+
+    if (emailError) {
+      setEmailError('')
+    }
+    if (passwordError) {
+      setPasswordError('')
+    }
+    if (signupError) {
+      setSignupError('')
+    }
+
+    const hasError = validateForm(credentials)
+    if (hasError) {
       return
     }
 
@@ -66,11 +89,16 @@ const Signup = ({ accountService }) => {
         label="Email"
         variant="filled"
         helperText={emailError}
+        error={emailError}
         onChange={(event) => {
-          setCredentials({
+          if (emailError) {
+            setEmailError('')
+          }
+          const creds = {
             ...credentials,
             email: event.target.value,
-          })
+          }
+          setCredentials(creds)
         }}
       />
 
@@ -81,6 +109,7 @@ const Signup = ({ accountService }) => {
         type="password"
         variant="filled"
         helperText={passwordError}
+        error={passwordError}
         autoComplete="current-password"
         onChange={(event) => {
           setCredentials({
