@@ -3,10 +3,10 @@ import { Outlet } from 'react-router-dom'
 
 import AHeader from '../components/admin/AHeader'
 
-const AppContainer = ({ accountService }) => {
+const AppContainer = () => {
   return (
     <div className="AppContainer">
-      <AHeader accountService={accountService} />
+      <AHeader />
       <div id="admin">
         <div id="admin_body">
           <Outlet />

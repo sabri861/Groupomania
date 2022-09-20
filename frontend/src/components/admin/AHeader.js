@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
 import { ReactComponent as MainLogo } from '../../assets/logoAuth.svg'
+import { useAccountService } from '../../hooks/useAccountService'
 
 const drawerWidth = 240
 const navItems = ['Acceuil', 'Profil', 'new post', 'Déconnexion']
@@ -22,6 +23,7 @@ const navItems = ['Acceuil', 'Profil', 'new post', 'Déconnexion']
 function AHeader(props) {
   const { window } = props
   const [mobileOpen, setMobileOpen] = React.useState(false)
+  const accountService = useAccountService()
   let navigate = useNavigate()
   const onMenuItemClick = (item) => {
     console.log(item)
@@ -40,8 +42,8 @@ function AHeader(props) {
   }
 
   const logout = () => {
-    console.log(props.accountService)
-    props.accountService.logout()
+    console.log(accountService)
+    accountService.logout()
     navigate('/')
   }
 

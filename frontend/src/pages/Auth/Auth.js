@@ -5,10 +5,12 @@ import Signup from './Signup'
 import { Paper, Button, Grid, Stack } from '@mui/material'
 import { ReactComponent as MainLogo } from '../../assets/logoAuth.svg'
 import bgLogo from '../../assets/bgLogo.png'
+import { useAccountService } from '../../hooks/useAccountService'
 
-const Auth = ({ accountService }) => {
+const Auth = () => {
   const [isLogin, setIsLogin] = useState(true)
   const navigate = useNavigate()
+  const accountService = useAccountService()
 
   useEffect(() => {
     if (accountService.isLogged()) {
@@ -71,11 +73,7 @@ const Auth = ({ accountService }) => {
           // }}
         >
           {/*( ? = if et le : = else ) /// Si le isLogin est a true on affiche le Login si non on affiche le Signup  ( ? = if et le : = else )*/}
-          {isLogin == true ? (
-            <Login accountService={accountService} />
-          ) : (
-            <Signup accountService={accountService} />
-          )}
+          {isLogin == true ? <Login /> : <Signup />}
         </Grid>
       </Grid>
     </Paper>

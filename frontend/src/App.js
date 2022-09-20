@@ -6,15 +6,15 @@ import AuthRouter from './router/AuthRouter'
 import AuthGard from './_helpers/AuthGard'
 import { CreatePublication } from '../src/pages/Admin/Publication'
 
-function App({ accountService }) {
+function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/admin/*"
           element={
-            <AuthGard accountService={accountService}>
-              <AdminRouter accountService={accountService} />
+            <AuthGard>
+              <AdminRouter />
             </AuthGard>
           }
         />
@@ -22,16 +22,13 @@ function App({ accountService }) {
         <Route
           path="/publication/*"
           element={
-            <AuthGard accountService={accountService}>
+            <AuthGard>
               <CreatePublication />
             </AuthGard>
           }
         />
 
-        <Route
-          path="/*"
-          element={<AuthRouter accountService={accountService} />}
-        />
+        <Route path="/*" element={<AuthRouter />} />
       </Routes>
     </BrowserRouter>
   )

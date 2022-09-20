@@ -22,6 +22,7 @@ export class AccountService {
   }
 
   async login({ email, password }) {
+    console.log('login:', { email, password })
     const credentials = { email, password }
     try {
       const res = await axios.post(

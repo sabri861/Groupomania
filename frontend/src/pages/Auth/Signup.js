@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Button, Stack, TextField } from '@mui/material'
+import { useAccountService } from '../../hooks/useAccountService'
 
 const styles = {
   textField: {
@@ -10,7 +11,8 @@ const styles = {
   },
 }
 
-const Signup = ({ accountService }) => {
+const Signup = () => {
+  const accountService = useAccountService()
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',

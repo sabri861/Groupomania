@@ -5,8 +5,6 @@ import { AccountService } from './_services/account.service'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 
-const accountService = new AccountService(localStorage)
-
 const theme = createTheme({
   palette: {
     mode: 'dark',
@@ -27,7 +25,7 @@ root.render(
   <React.StrictMode>
     <CssBaseline>
       <ThemeProvider theme={theme}>
-        <App accountService={accountService} />
+        <App />
       </ThemeProvider>
     </CssBaseline>
   </React.StrictMode>

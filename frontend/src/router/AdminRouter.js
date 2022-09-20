@@ -6,10 +6,10 @@ import Error from '../_utils/error'
 import { CreatePublication } from '../pages/Admin/Publication'
 import { Profile } from '../pages/Admin/Profil'
 
-const AdminRouter = ({ accountService }) => {
+const AdminRouter = () => {
   return (
     <Routes>
-      <Route element={<AppContainer accountService={accountService} />}>
+      <Route element={<AppContainer />}>
         <Route index element={<Acceuil />} />
         <Route path="/acceuil" element={<Acceuil />} />
         <Route path="/createPublication" element={<CreatePublication />} />

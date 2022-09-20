@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './auth.css'
 import { Button, Stack, TextField } from '@mui/material'
+import { useAccountService } from '../../hooks/useAccountService'
 
 const styles = {
   textField: {
@@ -11,8 +12,9 @@ const styles = {
   },
 }
 
-const Login = ({ accountService }) => {
+const Login = () => {
   let navigate = useNavigate()
+  const accountService = useAccountService()
 
   const [credentials, setCredentials] = useState({
     email: '',
@@ -29,6 +31,7 @@ const Login = ({ accountService }) => {
     e.preventDefault()
     console.log(credentials)
     setLoginError('')
+
     const regExEmail = (value) => {
       return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
     }
@@ -47,7 +50,9 @@ const Login = ({ accountService }) => {
         return
       }
       navigate('/admin')
-    } catch {
+    } catch (e) {
+      console.log(e)
+      console.log(accountService)
       setLoginError('email ou mot de passe incorrect')
     }
   }
