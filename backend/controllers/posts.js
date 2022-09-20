@@ -3,14 +3,15 @@ const fs = require('fs');
 
 
 exports.createpost = (req, res, next) => {
-    const postObject = JSON.parse(req.body.post);
-    const post = new post({
+    console.log(req.body)
+    const postObject = req.body;
+    const newPost = new post({
       ...postObject,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
-    post.likes = 0;
-    post.dislikes = 0;
-    post.save()
+    newPost.likes = 0;
+    newPost.dislikes = 0;
+    newPost.save()
         .then(() => res.status(201).json({ message : 'post postée !'}))
         .catch((error) => res.status(400).json({error: error}));
 };
