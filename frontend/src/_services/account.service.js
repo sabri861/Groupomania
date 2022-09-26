@@ -31,6 +31,7 @@ export class AccountService {
       )
       console.log(res)
       this.localStorage.setItem('token', res.data.token)
+      this.localStorage.setItem('userId', res.data.userId)
       //*****PASSER PAR DEFAUT LE TOKEN DANS TOUTE LES REQUETTE DE L'APPLICATION *******/
       axios.defaults.headers.common.Authorization = `Bearer ${window.localStorage.token}`
       return res
@@ -43,10 +44,15 @@ export class AccountService {
   logout() {
     console.log('here')
     this.localStorage.removeItem('token')
+    this.localStorage.removeItem('userId')
   }
 
   getToken() {
     return this.localStorage.getItem('token')
+  }
+
+  getUserId() {
+    return this.localStorage.getItem('userId')
   }
 
   isLogged() {

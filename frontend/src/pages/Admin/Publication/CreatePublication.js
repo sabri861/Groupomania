@@ -11,6 +11,8 @@ import {
 import IconButton from '@mui/material/IconButton'
 import PhotoCamera from '@mui/icons-material/PhotoCamera'
 import { usePostService } from '../../../hooks/usePostService'
+import { useAccountService } from '../../../hooks/useAccountService'
+import { useNavigate } from 'react-router-dom'
 
 const styles = {
   textField: {
@@ -21,15 +23,17 @@ const styles = {
 }
 
 const CreatePublication = () => {
+  const accountService = useAccountService()
   const postService = usePostService()
+  const navigate = useNavigate()
   const [image, setImage] = useState()
-  const [titre, setTitre] = useState('')
+  const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const changeImage = (e) => {
     setImage(e.target.files[0])
   }
-  const changeTitre = (e) => {
-    setTitre(e.target.value)
+  const changeName = (e) => {
+    setName(e.target.value)
   }
   const changeDescription = (e) => {
     setDescription(e.target.value)
@@ -51,9 +55,15 @@ const CreatePublication = () => {
     //   setPasswordError('mot de passe : minimum 6 caractères ')
     //   return
     // }
-    const post = { titre, description, image }
+    const post = {
+      name,
+      description,
+      image,
+      userId: accountService.getUserId(),
+    }
     try {
       const create = await postService.create(post)
+
       // if (login.response && login.response.data.error) {
       //   setLoginError(login.response.data.error)
       //   return
@@ -94,9 +104,9 @@ const CreatePublication = () => {
               Ajouter une publication
             </h1>
             <TextField
-              label="Titre"
+              label="titre"
               id="fullWidth"
-              onChange={(e) => changeTitre(e)}
+              onChange={(e) => changeName(e)}
               sx={{
                 input: { ...styles.textField },
               }}
@@ -122,10 +132,17 @@ const CreatePublication = () => {
               />
               <PhotoCamera />
             </IconButton>
-            <div>
-              {image ? <img src={URL.createObjectURL(image)} alt="" /> : null}
-              <input hidden onChange={(e) => onSubmit(e)} />
-            </div>
+            <Stack>
+              {image ? (
+                <img
+                  style={{
+                    borderRadius: 10,
+                  }}
+                  src={URL.createObjectURL(image)}
+                  alt=""
+                />
+              ) : null}
+            </Stack>
             <Button variant="contained" component="label" onClick={onSubmit}>
               Ajouter une publication
             </Button>
