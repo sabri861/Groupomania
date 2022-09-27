@@ -66,9 +66,10 @@ const Acceuil = () => {
             }}
           >
             <h1 style={{ color: '#87A084', textAlign: 'center' }}>Accueil</h1>
-            {posts.map((p) => {
+            {posts.map((p, index) => {
               return (
                 <PostItem
+                  key={index}
                   post={p}
                   handleClick={handleClick}
                   anchorEl={anchorEl}

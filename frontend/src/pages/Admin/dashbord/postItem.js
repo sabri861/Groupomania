@@ -5,7 +5,6 @@ import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 
-import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import FavoriteIcon from '@mui/icons-material/Favorite'
@@ -16,18 +15,27 @@ import MenuItem from '@mui/material/MenuItem'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 import { useAccountService } from '../../../hooks/useAccountService'
+import { usePostService } from '../../../hooks/usePostService'
 
 const PostItem = (props) => {
   const { post, handleClick, anchorEl, handleClose, ITEM_HEIGHT } = props
   const accountService = useAccountService()
+  const postService = usePostService()
+  const userId = accountService.getUserId()
   // regarde si post.usersLiked inclus le userId de la personne connecté
-  const [liked, setLiked] = useState(
-    post.usersLiked.includes(accountService.getUserId())
-  )
+  const [liked, setLiked] = useState(post.usersLiked.includes(userId))
 
-  const likePost = (hasLiked) => {
-    // appel api like post
-    // setLiked()
+  const likePost = async (hasLiked) => {
+    try {
+      await postService.likePost({
+        userId: userId,
+        postId: post._id,
+        like: hasLiked ? 1 : -1,
+      })
+      setLiked(hasLiked)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   const options = ['Supprimer', 'Modifier']

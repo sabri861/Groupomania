@@ -27,14 +27,17 @@ export class PostService {
       return error
     }
   }
-  async likePost(id) {
+  async likePost({ userId, postId, like }) {
     try {
-      const res = await axios.post(`http://localhost:4200/api/posts/${id}/like`)
+      const res = await axios.post(
+        `http://localhost:4200/api/posts/${postId}/like`,
+        { userId, like }
+      )
       console.log('posts:', res.data)
-      return res.data
+      return true
     } catch (error) {
       console.log(error)
-      return error
+      throw error
     }
   }
 }

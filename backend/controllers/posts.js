@@ -70,6 +70,7 @@ exports.deletepost = (req, res, next) => {
 exports.likepost = (req, res, next) => {
     post.findOne({ _id: req.params.id })
         .then(post => {
+            console.log('post to be liked:',post);
             if (req.body.like === 1) {
                 if (post.usersLiked.includes(req.body.userId)) 
                 {
@@ -78,7 +79,10 @@ exports.likepost = (req, res, next) => {
                 else
                 {
                     post.updateOne({ _id: req.params.id }, { $inc: { likes: req.body.like++ }, $push: { usersLiked: req.body.userId } })
-                        .then((post) => res.status(200).json({ message: 'Like ajouté !' }))
+                        .then((post) => {
+                            console.log('updated post',{post})
+                            res.status(200).json({ message: 'Like ajouté !' })
+                        })
                         .catch(error => res.status(400).json({ error }))
                 }
 
@@ -107,6 +111,9 @@ exports.likepost = (req, res, next) => {
                     post.updateOne({ _id: req.params.id }, { $pull: { usersDisliked: req.body.userId }, $inc: { dislikes: -1 } })
                             .then((post) => { res.status(200).json({ message: 'Dislike supprimé !' }) })
                             .catch(error => res.status(400).json({ error }));
+                }
+                else {
+                    throw 'invalid request'
                 }
             }
         })

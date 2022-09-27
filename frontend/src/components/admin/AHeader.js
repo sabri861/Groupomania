@@ -18,7 +18,7 @@ import { ReactComponent as MainLogo } from '../../assets/logoAuth.svg'
 import { useAccountService } from '../../hooks/useAccountService'
 
 const drawerWidth = 240
-const navItems = ['Acceuil', 'Profil', 'new post', 'Déconnexion']
+const navItems = ['Accueil', 'Profil', 'new post', 'Déconnexion']
 
 function AHeader(props) {
   const { window } = props
