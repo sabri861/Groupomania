@@ -19,7 +19,6 @@ import { usePostService } from '../../../hooks/usePostService'
 import { useNavigate } from 'react-router-dom'
 
 const PostItem = (props) => {
-  let navigate = useNavigate()
   const { post, onDelete } = props
   const accountService = useAccountService()
   const postService = usePostService()
@@ -47,6 +46,7 @@ const PostItem = (props) => {
   }
 
   const [anchorEl, setAnchorEl] = React.useState(null)
+  let navigate = useNavigate()
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -56,7 +56,7 @@ const PostItem = (props) => {
       await props.onDelete(post._id)
     }
     if (option === 'Modifier') {
-      console.log('doit router vers la page de modification')
+      navigate('/admin/modifPost')
     }
     setAnchorEl(null)
   }
