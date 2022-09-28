@@ -32,6 +32,8 @@ export class AccountService {
       console.log(res)
       this.localStorage.setItem('token', res.data.token)
       this.localStorage.setItem('userId', res.data.userId)
+      this.localStorage.setItem('email', email)
+
       //*****PASSER PAR DEFAUT LE TOKEN DANS TOUTE LES REQUETTE DE L'APPLICATION *******/
       axios.defaults.headers.common.Authorization = `Bearer ${window.localStorage.token}`
       return res
@@ -53,6 +55,10 @@ export class AccountService {
 
   getUserId() {
     return this.localStorage.getItem('userId')
+  }
+
+  isAdmin() {
+    return this.localStorage.getItem('email') === 'marwanecompany@gmail.com'
   }
 
   isLogged() {

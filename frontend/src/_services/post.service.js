@@ -34,10 +34,16 @@ export class PostService {
         { userId, like }
       )
       console.log('posts:', res.data)
-      return true
+      return res.data
     } catch (error) {
       console.log(error)
       throw error
     }
+  }
+
+  async deletePost(id) {
+    const res = await axios.delete(`http://localhost:4200/api/posts/${id}/`)
+    console.log('posts:', res.data)
+    return res.data
   }
 }

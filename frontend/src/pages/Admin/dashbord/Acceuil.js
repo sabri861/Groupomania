@@ -32,16 +32,12 @@ const Acceuil = () => {
   console.log('state 2 : ', posts)
   const theme = useTheme()
   const isSmallScreenAndUp = useMediaQuery(theme.breakpoints.up('sm'))
-
-  const [anchorEl, setAnchorEl] = React.useState(null)
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
+  const updateList = async (id) => {
+    await postService.deletePost(id)
+    setPosts((prevState) => {
+      return prevState.filter((item) => item._id !== id)
+    })
   }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
   return (
     <Box
       sx={{
@@ -71,10 +67,7 @@ const Acceuil = () => {
                 <PostItem
                   key={index}
                   post={p}
-                  handleClick={handleClick}
-                  anchorEl={anchorEl}
-                  handleClose={handleClose}
-                  ITEM_HEIGHT={ITEM_HEIGHT}
+                  onDelete={async (id) => await updateList(id)}
                 />
               )
             })}

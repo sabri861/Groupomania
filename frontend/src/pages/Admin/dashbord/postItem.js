@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardMedia from '@mui/material/CardMedia'
@@ -16,71 +16,95 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 import { useAccountService } from '../../../hooks/useAccountService'
 import { usePostService } from '../../../hooks/usePostService'
+import { useNavigate } from 'react-router-dom'
 
 const PostItem = (props) => {
-  const { post, handleClick, anchorEl, handleClose, ITEM_HEIGHT } = props
+  let navigate = useNavigate()
+  const { post, onDelete } = props
   const accountService = useAccountService()
   const postService = usePostService()
   const userId = accountService.getUserId()
+  const isAdmin = accountService.isAdmin()
   // regarde si post.usersLiked inclus le userId de la personne connecté
-  const [liked, setLiked] = useState(post.usersLiked.includes(userId))
+  const [liked, setLiked] = useState(false)
+  const options = ['Supprimer', 'Modifier']
 
-  const likePost = async (hasLiked) => {
+  useEffect(() => {
+    setLiked(post.usersLiked.includes(userId))
+  }, [])
+
+  const likePost = async (hasLike) => {
     try {
+      console.log(hasLike)
+      setLiked(hasLike)
       await postService.likePost({
         userId: userId,
         postId: post._id,
-        like: hasLiked ? 1 : -1,
       })
-      setLiked(hasLiked)
     } catch (e) {
       console.log(e)
     }
   }
 
-  const options = ['Supprimer', 'Modifier']
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = async (option) => {
+    if (option === 'Supprimer') {
+      await props.onDelete(post._id)
+    }
+    if (option === 'Modifier') {
+      console.log('doit router vers la page de modification')
+    }
+    setAnchorEl(null)
+  }
+
   const open = Boolean(anchorEl)
 
   return (
-    <Card>
+    <Card
+      style={{
+        backgroundColor: '#152D37',
+      }}
+    >
       <CardHeader
         action={
           <div>
-            <IconButton
-              aria-label="more"
-              id="long-button"
-              aria-controls={open ? 'long-menu' : undefined}
-              aria-expanded={open ? 'true' : undefined}
-              aria-haspopup="true"
-              onClick={handleClick}
-            >
-              <MoreVertIcon />
-            </IconButton>
-            <Menu
-              id="long-menu"
-              MenuListProps={{
-                'aria-labelledby': 'long-button',
-              }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              PaperProps={{
-                style: {
-                  maxHeight: ITEM_HEIGHT * 4.5,
-                  width: '20ch',
-                },
-              }}
-            >
-              {options.map((option) => (
-                <MenuItem
-                  key={option}
-                  selected={option === 'Pyxis'}
-                  onClick={handleClose}
+            {post.userId === userId || isAdmin ? (
+              <>
+                <IconButton
+                  aria-label="more"
+                  id="long-button"
+                  aria-controls={open ? 'long-menu' : undefined}
+                  aria-expanded={open ? 'true' : undefined}
+                  aria-haspopup="true"
+                  onClick={handleClick}
                 >
-                  {option}
-                </MenuItem>
-              ))}
-            </Menu>
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  id="long-menu"
+                  MenuListProps={{
+                    'aria-labelledby': 'long-button',
+                  }}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                >
+                  {options.map((option) => (
+                    <MenuItem
+                      key={option}
+                      selected={option === 'Pyxis'}
+                      onClick={() => handleClose(option)}
+                    >
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </>
+            ) : null}
           </div>
         }
         title={post.name || 'inconnu'}
@@ -99,8 +123,8 @@ const PostItem = (props) => {
       <CardActions disableSpacing>
         <IconButton
           aria-label="add to favorites"
-          onClick={() => likePost(!liked)}
-          sx={{ color: liked ? 'white' : '#87A084' }}
+          onClick={async () => await likePost(!liked)}
+          sx={{ color: liked ? 'red' : '#87A084' }}
         >
           <FavoriteIcon />
         </IconButton>
