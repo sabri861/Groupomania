@@ -27,7 +27,7 @@ const PostItem = (props) => {
   // regarde si post.usersLiked inclus le userId de la personne connecté
   const [liked, setLiked] = useState(false)
   const options = ['Supprimer', 'Modifier']
-  const [counter, setCounter] = useState(0)
+  const [counter, setCounter] = useState(post.likes)
 
   useEffect(() => {
     setLiked(post.usersLiked.includes(userId))
@@ -130,7 +130,7 @@ const PostItem = (props) => {
         >
           <FavoriteIcon />
         </IconButton>
-        {post.likes}
+        {counter}
       </CardActions>
     </Card>
   )
