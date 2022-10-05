@@ -12,7 +12,7 @@ import IconButton from '@mui/material/IconButton'
 import PhotoCamera from '@mui/icons-material/PhotoCamera'
 import { usePostService } from '../../../hooks/usePostService'
 import { useAccountService } from '../../../hooks/useAccountService'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const styles = {
   textField: {
@@ -26,6 +26,7 @@ const ModifPost = () => {
   const accountService = useAccountService()
   const postService = usePostService()
   const navigate = useNavigate()
+  const params = useParams()
   const [image, setImage] = useState()
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -62,7 +63,7 @@ const ModifPost = () => {
       userId: accountService.getUserId(),
     }
     try {
-      const modify = await postService.modify(post)
+      await postService.modify(post, params.id)
 
       // if (login.response && login.response.data.error) {
       //   setLoginError(login.response.data.error)
@@ -138,7 +139,7 @@ const ModifPost = () => {
                   style={{
                     borderRadius: 10,
                   }}
-                  src={URL.modifyObjectURL(image)}
+                  src={URL.createObjectURL(image)}
                   alt=""
                 />
               ) : null}

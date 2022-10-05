@@ -7,9 +7,9 @@ module.exports = (req, res, next) => {
     const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET')
     const userId = decodedToken.userId
     const email = decodedToken.email;
-    console.log('id from Auth')
-    console.log(userId)
-    req.auth = { userId, email, isAdmin: email === "marwanecompany@gmail.com"}
+    const isAdmin = decodedToken.isAdmin;
+    console.log('Authenticated user',{userId, isAdmin, email})
+    req.auth = { userId, email, isAdmin}
     next()
   } catch {
     res.status(401).json({

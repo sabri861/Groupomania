@@ -28,39 +28,63 @@ exports.getAllPosts = (req, res, next) => {
         .catch((error) => res.status(400).json({error: error}));
 };
 //----------------------------------------------------------
-exports.modifypost =(req, res, next) => {
+exports.modifypost = (req, res, next) => {
+  
+    const postObject = req.file
+      ? {
+          ...req.body,
+          imageUrl: `${req.protocol}://${req.get('host')}/images/${
+            req.file.filename
+          }`,
+        }
+      : { ...req.body };
     
-    const postObject = req.file ?
-    {
-        ...JSON.parse(req.body.post),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : {...req.body};
-    post.findOne({ _id: req.params.id })
-    .then((post) => {
-        if (post.userId !== req.auth.userId) {
-          res.status(403).json({error: 'Requête non authorisée'});
+  
+    post
+      .findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $set: { ...postObject },
         }
-        else {
-        post.updateOne({_id: req.params.id}, {...postObject, _id: req.params.id})
-            .then(() => res.status(201).json({ message : 'post updated successfully!'}))
-            .catch((error) => res.status(400).json({error: error}));
-        }
-    })
-};
+      )
+      .then(() => res.status(201).json({ message: 'post updated successfully!' }))
+      .catch((error) => res.status(400).json({ error: error }));
+  
+    
+  };
+// exports.modifypost =(req, res, next) => {
+    
+//     const postObject = req.file ?
+//     {
+//         ...JSON.parse(req.body.post),
+//         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+//     } : {...req.body};
+//     post.findOne({ _id: req.params.id })
+//     .then((post) => {
+//         if (post.userId !== req.auth.userId) {
+//           res.status(403).json({error: 'Requête non authorisée'});
+//         }
+//         else {
+//         post.updateOne({_id: req.params.id}, {...postObject, _id: req.params.id})
+//             .then(() => res.status(201).json({ message : 'post updated successfully!'}))
+//             .catch((error) => res.status(400).json({error: error}));
+//         }
+//     })
+// };
 //----------------------------------------------------------
 exports.deletepost = async (req, res, next) => {
     try {
         const foundPost = await post.findOne({ _id: req.params.id })
         if (!foundPost) {
-            return res.status(404).json({error: 'post non existante'});
-          }
-          if (foundPost.userId !== req.auth.userId || !req.auth.isAdmin) {
+            return res.status(404).json({error: 'post non existant'});
+        }
+        if (foundPost.userId !== req.auth.userId && !req.auth.isAdmin) {
             return res.status(403).json({error: 'Requête non authorisée'});
-          }
-          const filename = foundPost.imageUrl.split('/images/')[1];
-          await fs.unlinkSync(`images/${filename}`) 
-          await foundPost.deleteOne({_id: req.params.id})
-          return res.status(200).json({ message: 'Deleted!'});
+        }
+        const filename = foundPost.imageUrl.split('/images/')[1];
+        await fs.unlinkSync(`images/${filename}`) 
+        await foundPost.deleteOne({_id: req.params.id})
+        return res.status(200).json({ message: 'Deleted!'});
     } catch(e) {
         console.log(e);
         return res.status(400).send(e);

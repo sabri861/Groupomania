@@ -24,6 +24,7 @@ const PostItem = (props) => {
   const postService = usePostService()
   const userId = accountService.getUserId()
   const isAdmin = accountService.isAdmin()
+  console.log('PostItem isAdmin:', isAdmin)
   // regarde si post.usersLiked inclus le userId de la personne connecté
   const [liked, setLiked] = useState(false)
   const options = ['Supprimer', 'Modifier']
@@ -41,7 +42,7 @@ const PostItem = (props) => {
         userId: userId,
         postId: post._id,
       })
-      setCounter(hasLike ? post.likes + 1 : counter - 1)
+      setCounter(hasLike ? counter + 1 : counter - 1)
     } catch (e) {
       console.log(e)
     }
@@ -58,7 +59,7 @@ const PostItem = (props) => {
       await props.onDelete(post._id)
     }
     if (option === 'Modifier') {
-      navigate('/admin/modifPost')
+      navigate(`/admin/modifPost/${post._id}`)
     }
     setAnchorEl(null)
   }
@@ -116,6 +117,7 @@ const PostItem = (props) => {
         height="194"
         image={post.imageUrl}
         alt="Paella dish"
+        style={{ width: '100%', height: '100%' }}
       />
       <CardContent>
         <Typography variant="body2" color="#87A084">

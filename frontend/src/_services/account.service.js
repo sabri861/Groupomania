@@ -32,6 +32,7 @@ export class AccountService {
       console.log(res)
       this.localStorage.setItem('token', res.data.token)
       this.localStorage.setItem('userId', res.data.userId)
+      this.localStorage.setItem('isAdmin', res.data.isAdmin)
       this.localStorage.setItem('email', email)
 
       //*****PASSER PAR DEFAUT LE TOKEN DANS TOUTE LES REQUETTE DE L'APPLICATION *******/
@@ -41,6 +42,30 @@ export class AccountService {
       console.log(error)
       throw error
     }
+  }
+
+  async modifyEmail({ email }, id) {
+    const user = { email }
+    try {
+      const res = await axios.put(`http://localhost:4200/api/auth/${id}`, user)
+      this.localStorage.setItem('email', email)
+      console.log(res)
+      return res
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+
+  async delete(id) {
+    const res = await axios.delete(`http://localhost:4200/api/auth/${id}/`)
+    console.log('user:', res.data)
+    this.localStorage.clear()
+    return res.data
+  }
+
+  getUserEmail() {
+    return this.localStorage.getItem('email')
   }
 
   logout() {
@@ -58,11 +83,15 @@ export class AccountService {
   }
 
   isAdmin() {
-    return this.localStorage.getItem('email') === 'marwanecompany@gmail.com'
+    return JSON.parse(this.localStorage.getItem('isAdmin'))
   }
 
   isLogged() {
     return !!this.getToken()
+  }
+
+  getPseudo() {
+    return this.getUserEmail().split('@')[0]
   }
 
   init() {

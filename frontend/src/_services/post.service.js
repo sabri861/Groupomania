@@ -46,7 +46,7 @@ export class PostService {
     console.log('posts:', res.data)
     return res.data
   }
-  async modify({ name, description, image, userId }) {
+  async modify({ name, description, image, userId }, id) {
     const post = { name, description, image }
     const formData = new FormData()
     formData.append('name', name)
@@ -55,7 +55,7 @@ export class PostService {
     formData.append('userId', userId)
     try {
       const res = await axios.put(
-        'http://localhost:4200/api/posts/${id}',
+        `http://localhost:4200/api/posts/${id}`,
         formData
       )
       console.log(res)

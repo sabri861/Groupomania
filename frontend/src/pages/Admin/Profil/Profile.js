@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   useTheme,
   useMediaQuery,
@@ -8,6 +8,8 @@ import {
   Grid,
   Box,
 } from '@mui/material'
+import { useAccountService } from '../../../hooks/useAccountService'
+import { useNavigate } from 'react-router-dom'
 
 const styles = {
   textField: {
@@ -20,6 +22,49 @@ const styles = {
 const Profile = () => {
   const theme = useTheme()
   const isSmallScreenAndUp = useMediaQuery(theme.breakpoints.up('sm'))
+  const accountService = useAccountService()
+  const navigate = useNavigate()
+
+  const [email, setEmail] = useState(accountService.getUserEmail())
+  const pseudo = accountService.getPseudo()
+
+  const changeEmail = (e) => {
+    setEmail(e.target.value)
+  }
+
+  const onDelete = async (e) => {
+    e.preventDefault()
+    try {
+      await accountService.delete(accountService.getUserId())
+
+      navigate('/Auth')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+
+    // setLoginError('')
+
+    // const regExEmail = (value) => {
+    //   return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
+    // }
+    // if (!regExEmail(credentials.email)) {
+    //   setEmailError('email invalide')
+    //   return
+    // }
+
+    try {
+      await accountService.modifyEmail({ email }, accountService.getUserId())
+
+      navigate('/admin')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -48,21 +93,27 @@ const Profile = () => {
             </h1>
             <TextField
               label="Pseudonyme"
+              value={pseudo}
               id="fullWidth"
+              InputProps={{
+                readOnly: true,
+              }}
               sx={{
                 input: { ...styles.textField },
               }}
             />
             <TextField
               label="Adresse e-mail"
+              value={email}
+              onChange={(e) => changeEmail(e)}
               sx={{
                 input: { ...styles.textField },
               }}
             />
-            <Button variant="contained" component="label">
+            <Button variant="contained" component="label" onClick={onSubmit}>
               Mettre à jour
             </Button>
-            <Button variant="contained" component="label">
+            <Button variant="contained" component="label" onClick={onDelete}>
               supprimer mon compte
             </Button>
           </Stack>

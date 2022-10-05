@@ -15,7 +15,7 @@ const AdminRouter = () => {
         <Route path="/acceuil" element={<Acceuil />} />
         <Route path="/createPublication" element={<CreatePublication />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/modifPost" element={<ModifPost />} />
+        <Route path="/modifPost/:id" element={<ModifPost />} />
         <Route path="*" element={<Error />} />
       </Route>
     </Routes>
