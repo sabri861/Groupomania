@@ -28,12 +28,12 @@ const ModifPost = () => {
   const navigate = useNavigate()
   const params = useParams()
   const [searchParams] = useSearchParams()
-  console.log([...searchParams][0])
-  const itemName = [...searchParams][0]
-  const descriptionName = [...searchParams][1]
+
   const [image, setImage] = useState()
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
+  const [name, setName] = useState(searchParams.get('name'))
+  const [description, setDescription] = useState(
+    searchParams.get('description')
+  )
   const changeImage = (e) => {
     setImage(e.target.files[0])
   }
@@ -110,7 +110,7 @@ const ModifPost = () => {
             </h1>
             <TextField
               label="titre"
-              value={itemName[1]}
+              value={name}
               id="fullWidth"
               onChange={(e) => changeName(e)}
               sx={{
@@ -119,7 +119,7 @@ const ModifPost = () => {
             />
             <TextField
               label="Description"
-              value={descriptionName[1]}
+              value={description}
               onChange={(e) => changeDescription(e)}
               sx={{
                 input: { ...styles.textField },

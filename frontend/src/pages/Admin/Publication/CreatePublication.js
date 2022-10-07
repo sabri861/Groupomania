@@ -7,6 +7,7 @@ import {
   useMediaQuery,
   Grid,
   Box,
+  Alert,
 } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import PhotoCamera from '@mui/icons-material/PhotoCamera'
@@ -71,6 +72,7 @@ const CreatePublication = () => {
       navigate('/admin')
     } catch (e) {
       console.log(e)
+      Alert.alert("le post n'a pas pue être crée")
       // setLoginError('email ou mot de passe incorrect')
     }
   }
