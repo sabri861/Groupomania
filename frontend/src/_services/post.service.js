@@ -13,8 +13,10 @@ export class PostService {
       console.log(res)
       return res
     } catch (error) {
-      console.log(error)
-      return error
+      alert(
+        'Impossible de crée un post pour le moment. Veuillez réessayer plus tard.'
+      )
+      throw error
     }
   }
   async getAll() {
@@ -23,8 +25,10 @@ export class PostService {
       console.log('posts:', res.data)
       return res.data
     } catch (error) {
-      console.log(error)
-      return error
+      alert(
+        'Impossible de récupérer les posts pour le moment. Veuillez réessayer plus tard.'
+      )
+      throw error
     }
   }
   async likePost({ userId, postId, like }) {

@@ -16,8 +16,10 @@ export class AccountService {
       console.log(res)
       return res
     } catch (error) {
-      console.log(error)
-      return error
+      alert(
+        'Impossible de crée un compte pour le moment. Veuillez réessayer plus tard.'
+      )
+      throw error
     }
   }
 
@@ -39,7 +41,7 @@ export class AccountService {
       axios.defaults.headers.common.Authorization = `Bearer ${window.localStorage.token}`
       return res
     } catch (error) {
-      console.log(error)
+      alert('Impossible de ce connecter. Veuillez réessayer plus tard.')
       throw error
     }
   }
@@ -52,7 +54,9 @@ export class AccountService {
       console.log(res)
       return res
     } catch (error) {
-      console.log(error)
+      alert(
+        'Impossible de modfier pour le moment. Veuillez réessayer plus tard.'
+      )
       throw error
     }
   }
