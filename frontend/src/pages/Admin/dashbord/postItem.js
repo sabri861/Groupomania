@@ -59,7 +59,9 @@ const PostItem = (props) => {
       await props.onDelete(post._id)
     }
     if (option === 'Modifier') {
-      navigate(`/admin/modifPost/${post._id}`)
+      navigate(
+        `/admin/modifPost/${post._id}?name=${post.name}&description=${post.description}`
+      )
     }
     setAnchorEl(null)
   }

@@ -12,7 +12,7 @@ import IconButton from '@mui/material/IconButton'
 import PhotoCamera from '@mui/icons-material/PhotoCamera'
 import { usePostService } from '../../../hooks/usePostService'
 import { useAccountService } from '../../../hooks/useAccountService'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 const styles = {
   textField: {
@@ -27,6 +27,10 @@ const ModifPost = () => {
   const postService = usePostService()
   const navigate = useNavigate()
   const params = useParams()
+  const [searchParams] = useSearchParams()
+  console.log([...searchParams][0])
+  const itemName = [...searchParams][0]
+  const descriptionName = [...searchParams][1]
   const [image, setImage] = useState()
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -106,6 +110,7 @@ const ModifPost = () => {
             </h1>
             <TextField
               label="titre"
+              value={itemName[1]}
               id="fullWidth"
               onChange={(e) => changeName(e)}
               sx={{
@@ -114,6 +119,7 @@ const ModifPost = () => {
             />
             <TextField
               label="Description"
+              value={descriptionName[1]}
               onChange={(e) => changeDescription(e)}
               sx={{
                 input: { ...styles.textField },

@@ -59,6 +59,7 @@ export class PostService {
         formData
       )
       console.log(res)
+      this.localStorage.setItem('name', name)
       return res
     } catch (error) {
       console.log(error)
