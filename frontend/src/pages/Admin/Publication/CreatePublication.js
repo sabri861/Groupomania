@@ -55,7 +55,9 @@ const CreatePublication = () => {
       navigate('/admin')
     } catch (e) {
       console.log(e)
-      Alert.alert("le post n'a pas pue être crée")
+      alert(
+        "le post n'a pas pue être crée. veuillez indiquer un titre et une description "
+      )
     }
   }
 
