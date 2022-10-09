@@ -23,10 +23,11 @@ exports.getOnepost = (req, res, next) => {
 };
 //----------------------------------------------------------
 exports.getAllPosts = (req, res, next) => {
-    post.find()
-        .then((posts) => res.status(200).json(posts))
-        .catch((error) => res.status(400).json({error: error}));
-};
+    post
+      .find({}, null, { sort: { created_at: -1 } })
+      .then((posts) => res.status(200).json(posts))
+      .catch((error) => res.status(400).json({ error: error }));
+  };
 //----------------------------------------------------------
 exports.modifypost = (req, res, next) => {
   
