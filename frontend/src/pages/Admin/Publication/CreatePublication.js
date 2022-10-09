@@ -43,19 +43,6 @@ const CreatePublication = () => {
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    // setLoginError('')
-
-    // const regExEmail = (value) => {
-    //   return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
-    // }
-    // if (!regExEmail(credentials.email)) {
-    //   setEmailError('email invalide')
-    //   return
-    // }
-    // if (credentials.password.length < 6) {
-    //   setPasswordError('mot de passe : minimum 6 caractères ')
-    //   return
-    // }
     const post = {
       name,
       description,
@@ -65,15 +52,10 @@ const CreatePublication = () => {
     try {
       const create = await postService.create(post)
 
-      // if (login.response && login.response.data.error) {
-      //   setLoginError(login.response.data.error)
-      //   return
-      // }
       navigate('/admin')
     } catch (e) {
       console.log(e)
       Alert.alert("le post n'a pas pue être crée")
-      // setLoginError('email ou mot de passe incorrect')
     }
   }
 

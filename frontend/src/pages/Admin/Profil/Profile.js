@@ -46,16 +46,6 @@ const Profile = () => {
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    // setLoginError('')
-
-    // const regExEmail = (value) => {
-    //   return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
-    // }
-    // if (!regExEmail(credentials.email)) {
-    //   setEmailError('email invalide')
-    //   return
-    // }
-
     try {
       await accountService.modifyEmail({ email }, accountService.getUserId())
 

@@ -47,19 +47,6 @@ const ModifPost = () => {
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    // setLoginError('')
-
-    // const regExEmail = (value) => {
-    //   return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
-    // }
-    // if (!regExEmail(credentials.email)) {
-    //   setEmailError('email invalide')
-    //   return
-    // }
-    // if (credentials.password.length < 6) {
-    //   setPasswordError('mot de passe : minimum 6 caractères ')
-    //   return
-    // }
     const post = {
       name,
       description,
@@ -69,14 +56,9 @@ const ModifPost = () => {
     try {
       await postService.modify(post, params.id)
 
-      // if (login.response && login.response.data.error) {
-      //   setLoginError(login.response.data.error)
-      //   return
-      // }
       navigate('/admin')
     } catch (e) {
       console.log(e)
-      // setLoginError('email ou mot de passe incorrect')
     }
   }
 
@@ -161,11 +143,3 @@ const ModifPost = () => {
 }
 
 export default ModifPost
-
-// import React from 'react'
-
-// const ModifPost = () => {
-//   return <div>modification du post</div>
-// }
-
-// export default ModifPost
