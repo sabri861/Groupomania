@@ -112,6 +112,9 @@ const ModifPost = () => {
               color="primary"
               aria-label="upload picture"
               component="label"
+              style={{
+                borderRadius: 50,
+              }}
             >
               <input
                 hidden

@@ -56,7 +56,7 @@ const CreatePublication = () => {
     } catch (e) {
       console.log(e)
       alert(
-        "le post n'a pas pue être crée. veuillez indiquer un titre et une description "
+        "le post n'a pas pue être crée. veuillez indiquer un titre et une description et une image  "
       )
     }
   }
@@ -109,6 +109,9 @@ const CreatePublication = () => {
               color="primary"
               aria-label="upload picture"
               component="label"
+              style={{
+                borderRadius: 50,
+              }}
             >
               <input
                 hidden

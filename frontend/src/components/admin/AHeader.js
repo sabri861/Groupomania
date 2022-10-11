@@ -136,31 +136,7 @@ function AHeader(props) {
 }
 
 AHeader.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 }
 
 export default AHeader
-
-// // import { AccountService } from '../../_services/account.service'
-// import { useNavigate } from 'react-router-dom'
-
-// const AHeader = ({ accountService }) => {
-//   let navigate = useNavigate()
-//   const logout = () => {
-//     accountService.logout()
-//     navigate('/')
-//   }
-
-//   return (
-//     <div className="AHeader">
-//       header admin
-//       <button onClick={logout}>deconnexion</button>
-//     </div>
-//   )
-// }
-
-// export default AHeader
