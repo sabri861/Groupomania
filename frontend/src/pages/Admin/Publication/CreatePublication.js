@@ -56,7 +56,7 @@ const CreatePublication = () => {
     } catch (e) {
       console.log(e)
       alert(
-        "le post n'a pas pue être crée. veuillez indiquer un titre et une description et une image  "
+        "le post n'a pas pue être crée. veuillez indiquer un titre et une description et une image"
       )
     }
   }

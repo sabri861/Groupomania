@@ -13,6 +13,8 @@ const Auth = () => {
   const accountService = useAccountService()
 
   useEffect(() => {
+    // change root background color for overscroll
+    document.documentElement.style.setProperty('background', 'black')
     if (accountService.isLogged()) {
       navigate('/admin')
     }
@@ -21,17 +23,21 @@ const Auth = () => {
   return (
     <Paper
       style={{
-        backgroundImage: `url('${bgLogo}')`,
+        backgroundImage: `url('${bgLogo}'), linear-gradient(to right, #6DB3F2, #6DB3F2)`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
+        backgroundAttachment: 'fixed',
+        // backgroundColor: 'black',
         padding: 0,
+        height: '100vh',
+        minWidth: '500px',
       }}
       component={Stack}
       direction="column"
       justifyContent="center"
       elevation={0}
       square={true}
-      sx={{ height: '100vh' }}
+      // sx={{ height: '100vh' }}
     >
       <Grid
         container

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { BACKEND_BASE_URL } from '../config/constants'
 
 export class AccountService {
   constructor(localStorage) {
@@ -10,7 +11,7 @@ export class AccountService {
     const credentials = { email, password }
     try {
       const res = await axios.post(
-        'http://localhost:4200/api/auth/signup',
+        `${BACKEND_BASE_URL}/api/auth/signup`,
         credentials
       )
       console.log(res)
@@ -28,7 +29,7 @@ export class AccountService {
     const credentials = { email, password }
     try {
       const res = await axios.post(
-        'http://localhost:4200/api/auth/login',
+        `${BACKEND_BASE_URL}/api/auth/login`,
         credentials
       )
       console.log(res)
@@ -49,7 +50,7 @@ export class AccountService {
   async modifyEmail({ email }, id) {
     const user = { email }
     try {
-      const res = await axios.put(`http://localhost:4200/api/auth/${id}`, user)
+      const res = await axios.put(`${BACKEND_BASE_URL}/api/auth/${id}`, user)
       this.localStorage.setItem('email', email)
       console.log(res)
       return res
@@ -62,7 +63,7 @@ export class AccountService {
   }
 
   async delete(id) {
-    const res = await axios.delete(`http://localhost:4200/api/auth/${id}/`)
+    const res = await axios.delete(`${BACKEND_BASE_URL}/api/auth/${id}/`)
     console.log('user:', res.data)
     this.localStorage.clear()
     return res.data

@@ -1,15 +1,17 @@
 import axios from 'axios'
+import { BACKEND_BASE_URL } from '../config/constants'
 
 export class PostService {
   async create({ name, description, image, userId }) {
-    const post = { name, description, image }
+    // const post = { name, description, image }
+    // ---------- creation d'objet formeData -----------//
     const formData = new FormData()
     formData.append('name', name)
     formData.append('description', description)
     formData.append('image', image)
     formData.append('userId', userId)
     try {
-      const res = await axios.post('http://localhost:4200/api/posts', formData)
+      const res = await axios.post(`${BACKEND_BASE_URL}/api/posts`, formData)
       console.log(res)
       return res
     } catch (error) {
@@ -21,9 +23,18 @@ export class PostService {
   }
   async getAll() {
     try {
-      const res = await axios.get('http://localhost:4200/api/posts')
-      console.log('posts:', res.data)
-      return res.data
+      const res = await axios.get(`${BACKEND_BASE_URL}/api/posts`)
+      const data = res.data.map((post) => {
+        return {
+          ...post,
+          imageUrl: post.imageUrl.replace(
+            'http://localhost:4200',
+            BACKEND_BASE_URL
+          ),
+        }
+      })
+      console.log('posts:', data)
+      return data
     } catch (error) {
       alert(
         'Impossible de récupérer les posts pour le moment. Veuillez réessayer plus tard.'
@@ -34,7 +45,7 @@ export class PostService {
   async likePost({ userId, postId, like }) {
     try {
       const res = await axios.post(
-        `http://localhost:4200/api/posts/${postId}/like`,
+        `${BACKEND_BASE_URL}/api/posts/${postId}/like`,
         { userId, like }
       )
       console.log('posts:', res.data)
@@ -46,7 +57,7 @@ export class PostService {
   }
 
   async deletePost(id) {
-    const res = await axios.delete(`http://localhost:4200/api/posts/${id}/`)
+    const res = await axios.delete(`${BACKEND_BASE_URL}/api/posts/${id}/`)
     console.log('posts:', res.data)
     return res.data
   }
@@ -59,7 +70,7 @@ export class PostService {
     formData.append('userId', userId)
     try {
       const res = await axios.put(
-        `http://localhost:4200/api/posts/${id}`,
+        `${BACKEND_BASE_URL}/api/posts/${id}`,
         formData
       )
       console.log(res)

@@ -15,7 +15,7 @@ mongoose.connect(process.env.MANGODB,
         useUnifiedTopology: true
     })
     .then(() => console.log('Connexion à MongoDB réussie !'))
-    .catch(() => console.log('Connexion à MongoDB échouée !'));
+    .catch((error) => console.log('Connexion à MongoDB échouée !', error));
 
     app.use(express.json());
 
