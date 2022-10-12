@@ -12,7 +12,7 @@ export class PostService {
     formData.append('userId', userId)
     try {
       const res = await axios.post(`${BACKEND_BASE_URL}/api/posts`, formData)
-      console.log(res)
+      // console.log(res)
       return res
     } catch (error) {
       alert(
@@ -33,7 +33,7 @@ export class PostService {
           ),
         }
       })
-      console.log('posts:', data)
+      // console.log('posts:', data)
       return data
     } catch (error) {
       alert(
@@ -48,7 +48,7 @@ export class PostService {
         `${BACKEND_BASE_URL}/api/posts/${postId}/like`,
         { userId, like }
       )
-      console.log('posts:', res.data)
+      // console.log('posts:', res.data)
       return res.data
     } catch (error) {
       console.log(error)
@@ -58,7 +58,7 @@ export class PostService {
 
   async deletePost(id) {
     const res = await axios.delete(`${BACKEND_BASE_URL}/api/posts/${id}/`)
-    console.log('posts:', res.data)
+    // console.log('posts:', res.data)
     return res.data
   }
   async modify({ name, description, image, userId }, id) {
@@ -73,11 +73,11 @@ export class PostService {
         `${BACKEND_BASE_URL}/api/posts/${id}`,
         formData
       )
-      console.log(res)
+      // console.log(res)
       this.localStorage.setItem('name', name)
       return res
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       return error
     }
   }

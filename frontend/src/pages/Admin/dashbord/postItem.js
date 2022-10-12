@@ -24,7 +24,7 @@ const PostItem = (props) => {
   const postService = usePostService()
   const userId = accountService.getUserId()
   const isAdmin = accountService.isAdmin()
-  console.log('PostItem isAdmin:', isAdmin)
+  // console.log('PostItem isAdmin:', isAdmin)
   // regarde si post.usersLiked inclus le userId de la personne connecté
   const [liked, setLiked] = useState(false)
   const options = ['Supprimer', 'Modifier']
@@ -36,7 +36,7 @@ const PostItem = (props) => {
 
   const likePost = async (hasLike) => {
     try {
-      console.log(hasLike)
+      // console.log(hasLike)
       setLiked(hasLike)
       await postService.likePost({
         userId: userId,
@@ -44,7 +44,7 @@ const PostItem = (props) => {
       })
       setCounter(hasLike ? counter + 1 : counter - 1)
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
   }
 

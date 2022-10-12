@@ -39,7 +39,7 @@ const Profile = () => {
 
       navigate('/Auth')
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
   }
 
@@ -51,7 +51,7 @@ const Profile = () => {
 
       navigate('/admin')
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
   }
 

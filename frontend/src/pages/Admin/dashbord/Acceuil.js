@@ -21,7 +21,7 @@ const Acceuil = () => {
       const posts = await postService.getAll()
       setPosts(posts)
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
   }
 
@@ -29,7 +29,7 @@ const Acceuil = () => {
     getAll()
   }, [])
 
-  console.log('state 2 : ', posts)
+  // console.log('state 2 : ', posts)
   const theme = useTheme()
   const isSmallScreenAndUp = useMediaQuery(theme.breakpoints.up('sm'))
   const updateList = async (id) => {

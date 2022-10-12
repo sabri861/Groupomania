@@ -29,7 +29,7 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    console.log(credentials)
+    // console.log(credentials)
     setLoginError('')
 
     const regExEmail = (value) => {
@@ -51,8 +51,8 @@ const Login = () => {
       }
       navigate('/admin')
     } catch (e) {
-      console.log(e)
-      console.log(accountService)
+      // console.log(e)
+      // console.log(accountService)
       setLoginError('email ou mot de passe incorrect')
     }
   }

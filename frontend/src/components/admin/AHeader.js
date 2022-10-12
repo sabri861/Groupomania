@@ -26,7 +26,7 @@ function AHeader(props) {
   const accountService = useAccountService()
   let navigate = useNavigate()
   const onMenuItemClick = (item) => {
-    console.log(item)
+    // console.log(item)
     if (item == 'Déconnexion') {
       logout()
     } else if (item == 'new post') {
@@ -42,7 +42,7 @@ function AHeader(props) {
   }
 
   const logout = () => {
-    console.log(accountService)
+    // console.log(accountService)
     accountService.logout()
     navigate('/')
   }

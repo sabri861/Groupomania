@@ -43,7 +43,7 @@ const Signup = () => {
     }
 
     if (!regExPassword(credentials.password)) {
-      console.log('here')
+      // console.log('here')
       setPasswordError(
         'password invalide: Au moins une lettre majuscule et minuscule, un chiffre, un caractère spécial,'
       )
@@ -55,7 +55,7 @@ const Signup = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    console.log(credentials)
+    // console.log(credentials)
 
     if (emailError) {
       setEmailError('')
@@ -73,7 +73,7 @@ const Signup = () => {
     }
 
     const signup = await accountService.signup(credentials)
-    console.log(signup)
+    // console.log(signup)
     if (signup.response && signup.response.data.error) {
       setSignupError(signup.response.data.error)
       return

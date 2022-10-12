@@ -25,7 +25,7 @@ export class AccountService {
   }
 
   async login({ email, password }) {
-    console.log('login:', { email, password })
+    // console.log('login:', { email, password })
     const credentials = { email, password }
     try {
       const res = await axios.post(
@@ -52,7 +52,7 @@ export class AccountService {
     try {
       const res = await axios.put(`${BACKEND_BASE_URL}/api/auth/${id}`, user)
       this.localStorage.setItem('email', email)
-      console.log(res)
+      // console.log(res)
       return res
     } catch (error) {
       alert(
@@ -64,7 +64,7 @@ export class AccountService {
 
   async delete(id) {
     const res = await axios.delete(`${BACKEND_BASE_URL}/api/auth/${id}/`)
-    console.log('user:', res.data)
+    // console.log('user:', res.data)
     this.localStorage.clear()
     return res.data
   }

@@ -2,7 +2,7 @@ import axios from 'axios'
 export const BACKEND_BASE_URL =
   process.env.REACT_APP_BACKEND_URL || 'http://localhost:4200'
 
-console.log('BACKEND_BASE_URL:', BACKEND_BASE_URL)
+// console.log('BACKEND_BASE_URL:', BACKEND_BASE_URL)
 
 // axios.defaults.headers.common['User-Agent'] = 'localtunnel'
 
