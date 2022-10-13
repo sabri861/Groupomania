@@ -3,3 +3,5 @@ instruction
 2. crée une variable mangodb (c'est pas du JS tout en MAJ c'est tout)
 3. renseigné l'url de connection en valeur de la variable mangodb (comme dans le APP.JS)
 
+4. dans le Connect to Cluster de la base de donne indiquer Allow Access from Anywhere
+
